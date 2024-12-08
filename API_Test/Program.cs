@@ -1,4 +1,6 @@
 
+using API_Test.Repositories;
+using API_Test.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace API_Test
@@ -12,6 +14,14 @@ namespace API_Test
             // Add services to the container.
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddScoped<IClinicRepository, ClinicRepository>();
+            builder.Services.AddScoped<IPatientRepository, PatientRepository>();
+            builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+
+            builder.Services.AddScoped<IClinicService, ClinicService>();
+            builder.Services.AddScoped<IPatientService, PatientService>();
+            builder.Services.AddScoped<IAppointmentService, AppointmentService>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
