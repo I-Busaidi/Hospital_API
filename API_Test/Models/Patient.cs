@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace API_Test.Models
 {
@@ -19,6 +20,7 @@ namespace API_Test.Models
         public string gender {  get; set; }
 
         [InverseProperty("Patient")]
+        [JsonIgnore]
         public virtual ICollection<Appointment>? Appointments { get; set; }
     }
 }

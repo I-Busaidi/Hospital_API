@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace API_Test.Models
 {
@@ -18,10 +19,12 @@ namespace API_Test.Models
 
         [ForeignKey("Patient")]
         public int pId { get; set; }
+        [JsonIgnore]
         public virtual Patient Patient { get; set; }
 
         [ForeignKey("Clinic")]
         public int cId { get; set; }
+        [JsonIgnore]
         public virtual Clinic Clinic { get; set; }
     }
 }

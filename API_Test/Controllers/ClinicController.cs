@@ -30,11 +30,14 @@ namespace API_Test.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddClinic([FromBody] Clinic clinic)
+        public IActionResult AddClinic(string clinicName)
         {
             try
             {
-                string newClinic = _clinicService.AddClinic(clinic);
+                string newClinic = _clinicService.AddClinic(new Clinic
+                {
+                    cSpec = clinicName
+                });
                 return Created(string.Empty, newClinic);
             }
             catch (Exception ex)

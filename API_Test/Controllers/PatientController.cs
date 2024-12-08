@@ -30,11 +30,16 @@ namespace API_Test.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddPatient([FromBody] Patient patient)
+        public IActionResult AddPatient(string name, int age, string gender)
         {
             try
             {
-                string newPatientName = _patientService.AddPatient(patient);
+                string newPatientName = _patientService.AddPatient(new Patient
+                {
+                    pName = name,
+                    age = age,
+                    gender = gender.ToLower().Trim()
+                });
                 return Created(string.Empty, newPatientName);
             }
             catch (Exception ex)

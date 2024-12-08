@@ -52,12 +52,12 @@ namespace API_Test.Services
                 throw new ArgumentException("Name is required.");
             }
 
-            if (patients.Any(p => p.pName == patient.pName))
+            if (patients.Any(p => p.pName.ToLower().Trim() == patient.pName.ToLower().Trim()))
             {
                 throw new ArgumentException("Patient with this name already exists.");
             }
 
-            if (patient.gender != "male" || patient.gender != "female")
+            if (patient.gender.ToLower().Trim() != "male" && patient.gender.ToLower().Trim() != "female")
             {
                 throw new ArgumentException("Gender is not valid.");
             }

@@ -36,7 +36,7 @@ namespace API_Test.Services
         public Clinic GetClinicByName(string name)
         {
             var clinic = _clinicRepository.GetAll()
-                .FirstOrDefault(c => c.cSpec == name);
+                .FirstOrDefault(c => c.cSpec.ToLower().Trim() == name.ToLower().Trim());
 
             if (clinic == null)
             {
