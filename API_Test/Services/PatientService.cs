@@ -3,7 +3,7 @@ using API_Test.Repositories;
 
 namespace API_Test.Services
 {
-    public class PatientService
+    public class PatientService : IPatientService
     {
         private readonly IPatientRepository _patientRepository;
         public PatientService(IPatientRepository patientRepository)
@@ -42,6 +42,27 @@ namespace API_Test.Services
                 throw new KeyNotFoundException("Patient not found.");
             }
             return patient;
+        }
+
+        public string AddPatient(Patient patient)
+        {
+            var patients = _patientRepository.GetAll().ToList();
+            if (string.IsNullOrWhiteSpace(patient.pName))
+            {
+                throw new ArgumentException("Name is required.");
+            }
+
+            if (patients.Any(p => p.pName == patient.pName))
+            {
+                throw new ArgumentException("Patient with this name already exists.");
+            }
+
+            if (patient.gender != "male" || patient.gender != "female")
+            {
+                throw new ArgumentException("Gender is not valid.");
+            }
+
+            return _patientRepository.Add(patient);
         }
     }
 }
