@@ -8,5 +8,7 @@ namespace API_Test.Services
         List<Patient> GetAllPatients();
         Patient GetPatientById(int id);
         Patient GetPatientByName(string name);
+        void DeletePatient(int id);
+        void UpdatePatient(int id, Patient patient);
     }
 }

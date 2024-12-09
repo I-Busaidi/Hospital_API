@@ -93,5 +93,7 @@ namespace API_Test.Services
 
             return $"Appointment created for {createAppointment.Item3} in {createAppointment.Item2} clinic on {createAppointment.Item1}.";
         }
+
+
     }
 }
