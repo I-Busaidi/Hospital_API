@@ -66,7 +66,6 @@ namespace API_Test.Services
         {
             var clinic = _clinicService.GetClinicByName(clinicName);
             var patient = _patientService.GetPatientByName(patientName);
-            var appointments = _appointmentRepository.GetAll();
 
             int appointmentCount = clinic.Appointments.Count(ap => ap.appointmentDate.Date == date.Date);
 
@@ -94,6 +93,39 @@ namespace API_Test.Services
             return $"Appointment created for {createAppointment.Item3} in {createAppointment.Item2} clinic on {createAppointment.Item1}.";
         }
 
+        public void DeleteAppointment(int id)
+        {
+            var appointment = _appointmentRepository.GetById(id);
+            if (appointment == null)
+            {
+                throw new InvalidOperationException("Could not find appointment.");
+            }
+        }
 
+        public void UpdateAppointmentDate(int id, DateTime date)
+        {
+            var appointment = _appointmentRepository.GetById(id);
+            var clinic = _clinicService.GetClinicById(appointment.cId);
+            var patient = _patientService.GetPatientById(appointment.pId);
+
+            int appointmentSlot = clinic.Appointments.Count(a => a.appointmentDate.Date == date.Date) + 1;
+
+            if (appointmentSlot > clinic.numberOfSlots)
+            {
+                throw new ArgumentException($"No slots available for this date in {clinic.cSpec} clinic.");
+            }
+
+            if (patient.Appointments != null || patient.Appointments.Count > 0)
+            {
+                if (patient.Appointments.Any(ap => ap.appointmentDate.Date == date.Date && ap.cId == clinic.cId))
+                {
+                    throw new InvalidOperationException($"Patient {patient.pName} already has an appointment in {clinic.cSpec} clinic on this date.");
+                }
+            }
+
+            appointment.appointmentDate = date;
+            appointment.slotNumber = appointmentSlot;
+            _appointmentRepository.Update(id, appointment);
+        }
     }
 }
