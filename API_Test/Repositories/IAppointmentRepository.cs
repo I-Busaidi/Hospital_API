@@ -7,5 +7,7 @@ namespace API_Test.Repositories
         (DateTime, string, string) Add(Appointment appointment);
         IEnumerable<Appointment> GetAll();
         Appointment GetById(int id);
+        void Update(int id, Appointment newAppointment);
+        void Delete(int id);
     }
 }

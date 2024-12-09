@@ -33,5 +33,30 @@ namespace API_Test.Repositories
             _context.SaveChanges();
             return (appointment.appointmentDate, appointment.Clinic.cSpec, appointment.Patient.pName);
         }
+
+        public void Update(int id, Appointment newAppointment)
+        {
+            var existingAppointment = GetById(id);
+            if (existingAppointment != null)
+            {
+                existingAppointment.slotNumber = newAppointment.slotNumber;
+                existingAppointment.appointmentDate = newAppointment.appointmentDate;
+                existingAppointment.pId = newAppointment.pId;
+                existingAppointment.cId = newAppointment.cId;
+
+                _context.appointments.Update(existingAppointment);
+                _context.SaveChanges();
+            }
+        }
+
+        public void Delete(int id)
+        {
+            var appointment = GetById(id);
+            if (appointment != null)
+            {
+                _context.appointments.Remove(appointment);
+                _context.SaveChanges();
+            }
+        }
     }
 }

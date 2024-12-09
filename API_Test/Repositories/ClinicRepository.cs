@@ -27,5 +27,28 @@ namespace API_Test.Repositories
             _context.SaveChanges();
             return clinic.cSpec;
         }
+
+        public void Update(int id, Clinic newClinic)
+        {
+            var existingClinic = GetById(id);
+            if (existingClinic != null)
+            {
+                existingClinic.cSpec = newClinic.cSpec;
+                existingClinic.numberOfSlots = newClinic.numberOfSlots;
+
+                _context.Clinics.Update(existingClinic);
+                _context.SaveChanges();
+            }
+        }
+
+        public void Delete(int id)
+        {
+            var clinic = GetById(id);
+            if (clinic != null)
+            {
+                _context.Clinics.Remove(clinic);
+                _context.SaveChanges();
+            }
+        }
     }
 }

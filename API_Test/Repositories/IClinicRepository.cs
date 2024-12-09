@@ -7,5 +7,7 @@ namespace API_Test.Repositories
         string Add(Clinic clinic);
         IEnumerable<Clinic> GetAll();
         Clinic GetById(int id);
+        void Delete(int id);
+        void Update(int id, Clinic newClinic);
     }
 }
